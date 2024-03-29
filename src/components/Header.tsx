@@ -8,6 +8,9 @@ interface HeaderProps {
   
 
 function Header({ toggleDarkMode, darkMode, light }: HeaderProps) {
+    const buttonBgClass = darkMode ? 'bg-white' : light ? 'bg-gray-100' : 'bg-gray-100';
+const buttonHoverBgClass = darkMode ? 'hover:bg-gray-200' : 'hover:bg-gray-200';
+
   const [logoSrc, setLogoSrc] = useState('');
 
   useEffect(() => {
@@ -30,7 +33,8 @@ function Header({ toggleDarkMode, darkMode, light }: HeaderProps) {
   }, [logoSrc]);
 
   return (
-    <header className={`text-${darkMode ? 'gray' : light ? 'teal' : 'teal'}-800 body-font bg-${darkMode ? 'black' : light ? 'black' : 'white'}`}>
+    
+    <header className={`text-${darkMode ? 'gray' : light ? 'teal' : 'teal'}-800 body-font bg-${darkMode ? 'teal-600' : light ? 'black' : 'white'}`}>
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a className="flex title-font font-medium items-center  text-teal-600 mb-4 md:mb-0 " >
           {logoSrc && <img className="w-10 h-10 rounded-full" src={logoSrc} alt="Logo" />}
@@ -39,9 +43,10 @@ function Header({ toggleDarkMode, darkMode, light }: HeaderProps) {
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
 
         </nav>
-        <button className={`inline-flex items-center bg-${darkMode ? 'white' : light ? 'gray-100' : 'gray-100'} border-0 py-1 px-3 focus:outline-none hover:bg-${darkMode ? 'gray-200' : 'gray-200'} rounded text-base mt-4 md:mt-0`} onClick={toggleDarkMode}>
-          {darkMode ? 'Modo Claro' : 'Modo Oscuro'}
-        </button>
+        <button className={`inline-flex items-center ${buttonBgClass} border-0 py-1 px-3 focus:outline-none ${buttonHoverBgClass} rounded text-base mt-4 md:mt-0`} onClick={toggleDarkMode}>
+  {darkMode ? 'Modo Claro' : 'Modo Oscuro'}
+</button>
+
       </div>
     </header>
   );
