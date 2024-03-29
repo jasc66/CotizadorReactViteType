@@ -5,10 +5,11 @@ import { formatCurrency } from "../helpers"
 type OrderTotalsProps = {
     order: OrderItem[],
     tip: number,
-    placeOrder: () => void
+    placeOrder: () => void,
+    darkMode: boolean // Agregar darkMode al tipo OrderTotalsProps
 }
 
-export default function OrderTotals({order, tip, placeOrder} : OrderTotalsProps) {
+export default function OrderTotals({order, tip, placeOrder, darkMode} : OrderTotalsProps) {
 
     const subtotalAmount = useCallback(() => order.reduce( (total, item) => total + (item.quantity * item.price), 0 ) , [order])
     const tipAmount = useCallback(() => subtotalAmount() * tip, [tip, order])
@@ -19,7 +20,7 @@ export default function OrderTotals({order, tip, placeOrder} : OrderTotalsProps)
             <div className="space-y-3">
                 <h2 className="font-black text-2xl">Totales y Propina:</h2>
                 <p>Subtotal a pagar: {''}
-                    <span className="font-bold">{ formatCurrency(subtotalAmount()) }</span>
+                <span className="font-bold">{ formatCurrency(subtotalAmount()) }</span>
                 </p>
                 <p>Propina: {''}
                     <span className="font-bold">{ formatCurrency(tipAmount()) }</span>
@@ -30,7 +31,7 @@ export default function OrderTotals({order, tip, placeOrder} : OrderTotalsProps)
             </div>
 
             <button
-                className="w-full bg-black p-3 uppercase text-white font-bold mt-10 disabled:opacity-10" 
+                className={`w-full p-3 uppercase font-bold mt-10 disabled:opacity-10 ${darkMode ? 'bg-teal-800 text-white' : 'bg-black text-white'}`} // Aplica clases condicionales
                 disabled={totalAmount() === 0}
                 onClick={placeOrder}
             >
